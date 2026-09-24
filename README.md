@@ -1,7 +1,7 @@
 # EduLead — Admission Lead Management System
 
 > **Candidate Pre-Drive Assessment Brief — Assignment 5 (Edumerge Solutions)**  
-> Built with the **MERN Stack** (React, Node.js, Express, MongoDB, Tailwind CSS, Recharts).
+> Built with **Python (FastAPI + SQLAlchemy + SQLite)** and **React (Vite + Tailwind CSS + Recharts)**.
 
 ---
 
@@ -16,13 +16,14 @@ $$\text{New Lead} \longrightarrow \text{Assigned Counsellor} \longrightarrow \te
 ## 🚀 Instant Quick Start
 
 ### 1. Requirements
-- Node.js (v18+)
-- npm (v9+)
+- Python (3.10+)
+- Node.js (v18+) & npm
 
 ### 2. Launch the Application
-EduLead features a **Dual-Mode Database Adapter**:
-- If `MONGO_URI` is provided in `.env`, it connects to your MongoDB server or MongoDB Atlas.
-- If no database is configured, it **automatically boots a zero-config embedded in-memory database** and pre-seeds 15 realistic student inquiries, counsellors, follow-ups, and audit trails.
+EduLead features a **FastAPI backend with SQLite database**:
+- Uses **SQLAlchemy ORM** with SQLite (`edulead.db`).
+- Automatically creates all relational tables and pre-seeds 15 realistic student inquiries, counsellors, follow-ups, and audit trails on first launch.
+- Interactive Swagger API docs available at: [http://localhost:5000/docs](http://localhost:5000/docs).
 
 ```bash
 # In the root directory (c:\Users\admin\OneDrive\Desktop\TASK)
@@ -89,14 +90,17 @@ TASK/
 │   │   ├── pages/              # Dashboard, Leads, LeadDetail, Followups, Counsellors, Reports, Settings
 │   │   └── App.jsx
 │   └── package.json
-├── server/                     # Node.js + Express + Mongoose Backend
-│   ├── config/db.js            # Dual-mode MongoDB / In-memory engine
-│   ├── controllers/            # Auth, Lead, Followup, Counsellor, Report controllers
-│   ├── models/                 # User, Lead, Followup, Activity schemas
-│   ├── middleware/             # JWT auth & RBAC authorization
-│   ├── routes/                 # Express REST endpoints
-│   ├── utils/seedData.js       # Rich admissions demo dataset
-│   └── index.js
+├── server_python/              # Python FastAPI + SQLAlchemy (SQLite) Backend
+│   ├── app/
+│   │   ├── database.py         # SQLAlchemy engine and SQLite setup
+│   │   ├── models.py           # User, Lead, Followup, Activity, RecoveryHistory tables
+│   │   ├── auth.py             # JWT token handling & password hashing
+│   │   ├── seed.py             # Realistic admissions demo dataset
+│   │   └── routers/            # Auth, Leads, Followups, Counsellors, Reports API
+│   ├── requirements.txt
+│   ├── main.py
+│   └── run.py
+├── server/                     # (Optional) Node.js/Express backend
 ├── AI_USAGE_REPORT.md          # Mandatory AI Usage Report (Assessment Form)
 ├── APPROACH_NOTE.md            # Detailed product thinking, architecture & trade-offs
 ├── run-dev.js                  # Single command dev runner
