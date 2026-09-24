@@ -6,6 +6,7 @@ import StatusBadge from '../components/StatusBadge';
 import PriorityBadge from '../components/PriorityBadge';
 import NewLeadModal from '../components/NewLeadModal';
 import BulkReassignModal from '../components/BulkReassignModal';
+import { defaultLeads, defaultUsers } from '../api/mockData';
 import {
   Search,
   Filter,
@@ -55,17 +56,25 @@ export const LeadsList = () => {
       if (counsellor !== 'ALL') params.append('counsellor', counsellor);
 
       const res = await api.get(`/leads?${params.toString()}`);
-      if (res.data.success) {
+      if (res.data?.success && res.data.data?.length > 0) {
         setLeads(res.data.data);
         setTotalLeads(res.data.totalLeads);
+      } else {
+        setLeads(defaultLeads);
+        setTotalLeads(defaultLeads.length);
       }
 
       const cRes = await api.get('/users/counsellors');
-      if (cRes.data.success) {
+      if (cRes.data?.success) {
         setCounsellors(cRes.data.data);
+      } else {
+        setCounsellors(defaultUsers);
       }
     } catch (err) {
-      console.error('Failed to load leads:', err);
+      console.warn('[LeadsList] Using cloud demo dataset fallback:', err.message);
+      setLeads(defaultLeads);
+      setTotalLeads(defaultLeads.length);
+      setCounsellors(defaultUsers);
     } finally {
       setLoading(false);
     }

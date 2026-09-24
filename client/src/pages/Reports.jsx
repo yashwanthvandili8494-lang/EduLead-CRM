@@ -26,6 +26,8 @@ import {
   Pie,
 } from 'recharts';
 
+import { defaultReports } from '../api/mockData';
+
 export const Reports = () => {
   const { user } = useAuth();
   const [data, setData] = useState(null);
@@ -37,11 +39,14 @@ export const Reports = () => {
       try {
         setLoading(true);
         const res = await api.get('/reports/analytics');
-        if (res.data.success) {
+        if (res.data?.success && res.data?.data) {
           setData(res.data.data);
+        } else {
+          setData(defaultReports);
         }
       } catch (err) {
-        console.error('Failed to load reports:', err);
+        console.warn('Backend unavailable, using cloud demo reports:', err);
+        setData(defaultReports);
       } finally {
         setLoading(false);
       }

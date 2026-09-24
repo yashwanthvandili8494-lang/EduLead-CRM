@@ -5,6 +5,7 @@ import api from '../api/client';
 import MetricCard from '../components/MetricCard';
 import StatusBadge from '../components/StatusBadge';
 import NewLeadModal from '../components/NewLeadModal';
+import { defaultDashboard, defaultUsers } from '../api/mockData';
 import {
   Users,
   UserPlus,
@@ -42,16 +43,22 @@ export const Dashboard = () => {
     try {
       setLoading(true);
       const res = await api.get('/reports/dashboard');
-      if (res.data.success) {
+      if (res.data?.success) {
         setData(res.data.data);
+      } else {
+        setData(defaultDashboard);
       }
 
       const cRes = await api.get('/users/counsellors');
-      if (cRes.data.success) {
+      if (cRes.data?.success) {
         setCounsellors(cRes.data.data);
+      } else {
+        setCounsellors(defaultUsers);
       }
     } catch (err) {
-      console.error('Failed to load dashboard:', err);
+      console.warn('[Dashboard] Using cloud demo dataset fallback:', err.message);
+      setData(defaultDashboard);
+      setCounsellors(defaultUsers);
     } finally {
       setLoading(false);
     }

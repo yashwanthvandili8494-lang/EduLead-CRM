@@ -15,6 +15,8 @@ import {
   Plus,
 } from 'lucide-react';
 
+import { defaultUsers } from '../api/mockData';
+
 export const Counsellors = () => {
   const { user, isManager, isAdmin } = useAuth();
   const [counsellors, setCounsellors] = useState([]);
@@ -36,11 +38,14 @@ export const Counsellors = () => {
     try {
       setLoading(true);
       const res = await api.get('/users/counsellors');
-      if (res.data.success) {
+      if (res.data?.success && res.data?.data?.length > 0) {
         setCounsellors(res.data.data);
+      } else {
+        setCounsellors(defaultUsers.filter((u) => u.role === 'COUNSELLOR'));
       }
     } catch (err) {
-      console.error('Failed to load counsellors:', err);
+      console.warn('Backend unavailable, using cloud demo counsellors:', err);
+      setCounsellors(defaultUsers.filter((u) => u.role === 'COUNSELLOR'));
     } finally {
       setLoading(false);
     }

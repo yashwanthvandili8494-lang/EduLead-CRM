@@ -30,6 +30,8 @@ import {
 
 const stages = ['NEW', 'CONTACTED', 'FOLLOW_UP', 'INTERESTED', 'APPLICATION', 'CONVERTED'];
 
+import { defaultLeads, defaultUsers } from '../api/mockData';
+
 export const LeadDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -51,18 +53,30 @@ export const LeadDetail = () => {
     try {
       setLoading(true);
       const res = await api.get(`/leads/${id}`);
-      if (res.data.success) {
+      if (res.data?.success && res.data?.data) {
         setLead(res.data.data);
+      } else {
+        const found = defaultLeads.find((l) => String(l._id) === String(id) || String(l.id) === String(id) || l.leadId === id) || defaultLeads[0];
+        setLead(found);
       }
 
       if (isManager) {
-        const cRes = await api.get('/users/counsellors');
-        if (cRes.data.success) {
-          setCounsellors(cRes.data.data);
+        try {
+          const cRes = await api.get('/users/counsellors');
+          if (cRes.data?.success && cRes.data?.data) {
+            setCounsellors(cRes.data.data);
+          } else {
+            setCounsellors(defaultUsers.filter((u) => u.role === 'COUNSELLOR'));
+          }
+        } catch {
+          setCounsellors(defaultUsers.filter((u) => u.role === 'COUNSELLOR'));
         }
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to fetch lead details');
+      console.warn('Backend offline, using cloud demo lead detail:', err);
+      const found = defaultLeads.find((l) => String(l._id) === String(id) || String(l.id) === String(id) || l.leadId === id) || defaultLeads[0];
+      setLead(found);
+      setCounsellors(defaultUsers.filter((u) => u.role === 'COUNSELLOR'));
     } finally {
       setLoading(false);
     }
