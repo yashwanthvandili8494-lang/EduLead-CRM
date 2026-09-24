@@ -14,6 +14,11 @@ New Lead ➔ Assign Counsellor ➔ Contact Lead ➔ Schedule Follow-up ➔ Inter
                                                                                    ↘ Lost ➔ Recover
 ```
 
+### 🌐 Live Cloud Deployment
+- **Live Python API (Render):** [https://edulead-crm-lksk.onrender.com](https://edulead-crm-lksk.onrender.com)
+- **API Health Check:** [https://edulead-crm-lksk.onrender.com/api/health](https://edulead-crm-lksk.onrender.com/api/health)
+- **Interactive Swagger Docs:** [https://edulead-crm-lksk.onrender.com/docs](https://edulead-crm-lksk.onrender.com/docs)
+
 ---
 
 ## ⚡ Quick Start Guide

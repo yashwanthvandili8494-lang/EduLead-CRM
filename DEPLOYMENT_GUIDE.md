@@ -33,9 +33,9 @@ git push -u origin main
    - **Instance Type:** `Free`
 5. Click **"Deploy Web Service"**.
 6. Once deployed (typically 1–2 minutes), copy your Render public URL:  
-   👉 `https://edulead-api-xxxx.onrender.com`
+   👉 `https://edulead-crm-lksk.onrender.com`
 
-> **Verify:** Visit `https://edulead-api-xxxx.onrender.com/api/health` in your browser. You should see `{"status":"online", ...}`.
+> **Verify:** Visit `https://edulead-crm-lksk.onrender.com/api/health` in your browser. You will see `{"status":"online", "app":"EduLead API (Python + SQL)"}`.
 
 ---
 

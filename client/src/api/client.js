@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const rawBase = import.meta.env.VITE_API_URL || '';
+const rawBase =
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.PROD ? 'https://edulead-crm-lksk.onrender.com' : '');
 const apiBase = rawBase
   ? (rawBase.endsWith('/api') ? rawBase : `${rawBase.replace(/\/$/, '')}/api`)
   : '/api';
