@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import Layout from './components/Layout';
+import ErrorBoundary from './components/ErrorBoundary';
 
 // Pages
 import Login from './pages/Login';
@@ -33,78 +34,80 @@ const ProtectedRoute = ({ children }) => {
 
 export const App = () => {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<Login />} />
+    <ErrorBoundary>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/login" element={<Login />} />
 
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            }
-          />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
 
-          <Route
-            path="/leads"
-            element={
-              <ProtectedRoute>
-                <LeadsList />
-              </ProtectedRoute>
-            }
-          />
+            <Route
+              path="/leads"
+              element={
+                <ProtectedRoute>
+                  <LeadsList />
+                </ProtectedRoute>
+              }
+            />
 
-          <Route
-            path="/leads/:id"
-            element={
-              <ProtectedRoute>
-                <LeadDetail />
-              </ProtectedRoute>
-            }
-          />
+            <Route
+              path="/leads/:id"
+              element={
+                <ProtectedRoute>
+                  <LeadDetail />
+                </ProtectedRoute>
+              }
+            />
 
-          <Route
-            path="/followups"
-            element={
-              <ProtectedRoute>
-                <Followups />
-              </ProtectedRoute>
-            }
-          />
+            <Route
+              path="/followups"
+              element={
+                <ProtectedRoute>
+                  <Followups />
+                </ProtectedRoute>
+              }
+            />
 
-          <Route
-            path="/counsellors"
-            element={
-              <ProtectedRoute>
-                <Counsellors />
-              </ProtectedRoute>
-            }
-          />
+            <Route
+              path="/counsellors"
+              element={
+                <ProtectedRoute>
+                  <Counsellors />
+                </ProtectedRoute>
+              }
+            />
 
-          <Route
-            path="/reports"
-            element={
-              <ProtectedRoute>
-                <Reports />
-              </ProtectedRoute>
-            }
-          />
+            <Route
+              path="/reports"
+              element={
+                <ProtectedRoute>
+                  <Reports />
+                </ProtectedRoute>
+              }
+            />
 
-          <Route
-            path="/settings"
-            element={
-              <ProtectedRoute>
-                <Settings />
-              </ProtectedRoute>
-            }
-          />
+            <Route
+              path="/settings"
+              element={
+                <ProtectedRoute>
+                  <Settings />
+                </ProtectedRoute>
+              }
+            />
 
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+    </ErrorBoundary>
   );
 };
 

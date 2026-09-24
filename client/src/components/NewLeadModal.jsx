@@ -253,11 +253,12 @@ export const NewLeadModal = ({ isOpen, onClose, onLeadCreated, counsellors = [] 
                 className="w-full text-sm border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:outline-hidden bg-white"
               >
                 <option value="">Leave Unassigned (Pool)</option>
-                {counsellors.map((c) => (
-                  <option key={c._id} value={c._id}>
-                    {c.name}
-                  </option>
-                ))}
+                {Array.isArray(counsellors) &&
+                  counsellors.map((c) => (
+                    <option key={c?._id || c?.id} value={c?._id || c?.id}>
+                      {c?.name}
+                    </option>
+                  ))}
               </select>
             </div>
           </div>

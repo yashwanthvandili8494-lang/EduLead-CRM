@@ -76,7 +76,12 @@ export const Dashboard = () => {
     );
   }
 
-  const { metrics, pipeline = [], sources = [], ageing = [], recentLeads = [] } = data || {};
+  const rawData = data || defaultDashboard;
+  const metrics = rawData.metrics || {};
+  const pipeline = Array.isArray(rawData.pipeline) ? rawData.pipeline : [];
+  const sources = Array.isArray(rawData.sources) ? rawData.sources : [];
+  const ageing = Array.isArray(rawData.ageing) ? rawData.ageing : [];
+  const recentLeads = Array.isArray(rawData.recentLeads) ? rawData.recentLeads : [];
 
   const pipelineColors = {
     NEW: '#3b82f6',
@@ -403,7 +408,7 @@ export const Dashboard = () => {
       <NewLeadModal
         isOpen={isNewLeadOpen}
         onClose={() => setIsNewLeadOpen(false)}
-        counsellors={counsellors}
+        counsellors={Array.isArray(counsellors) ? counsellors : []}
         onLeadCreated={() => {
           fetchDashboardData();
         }}
