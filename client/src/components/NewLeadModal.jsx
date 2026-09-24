@@ -22,10 +22,10 @@ export const NewLeadModal = ({ isOpen, onClose, onLeadCreated, counsellors = [] 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  if (!isOpen) return null;
-
   // Live duplicate checking on phone or email change (debounced)
   useEffect(() => {
+    if (!isOpen) return;
+
     const checkDup = async () => {
       if (formData.phone.length >= 10 || formData.email.includes('@')) {
         setIsCheckingDuplicate(true);
@@ -51,7 +51,9 @@ export const NewLeadModal = ({ isOpen, onClose, onLeadCreated, counsellors = [] 
 
     const timer = setTimeout(checkDup, 500);
     return () => clearTimeout(timer);
-  }, [formData.phone, formData.email]);
+  }, [formData.phone, formData.email, isOpen]);
+
+  if (!isOpen) return null;
 
   const handleSubmit = async (e, allowDuplicate = false) => {
     if (e) e.preventDefault();
